@@ -23,7 +23,6 @@ def copy_dirictory(local_dir, remote_dir,sftp_client):
         all_path = local_dir+"\\"+file
         attr = os.stat(all_path)
         if attr.st_file_attributes & stat.FILE_ATTRIBUTE_ARCHIVE: 
-            print(file+" - archive")
             upload_file_to_server(sftp_client, all_path, remote_dir+"\\"+file)
             os.system(f"attrib -a  {all_path}")
             print (f"File {file} was copy")
@@ -54,10 +53,10 @@ remote_dir = path['remote_dir']
 spec = mode['mode']
 timesleep =int( mode['timesleep'])
 
-
+print("Configured \nTry conected..")
 sftp_client = create_sftp_client(host, port, username, password)
 
-
+print(f"Connected to {host}")
 if spec == 'copy': 
     while(1):
         copy_dirictory(local_dir,remote_dir,sftp_client)
@@ -70,5 +69,6 @@ elif spec == 'move':
         time.sleep(timesleep)
     
 else : print("Unknow mode")
-	
+print("End programm")
+input()
 sftp_client.close()
